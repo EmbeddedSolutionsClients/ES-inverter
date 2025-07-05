@@ -1,0 +1,78 @@
+# Copyright (C) 2024 EmbeddedSolutions.pl
+
+## IDF Component Manager Manifest File
+dependencies:
+  idf:
+    version: "5.4"
+  em_ble_core:
+    path: "components/experimental/em_ble_core"
+    git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+    version: "1.0.4"
+  em_ble_prov_svc:
+    path: "components/experimental/em_ble_prov_svc"
+    git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+    version: "1.0.4"
+  em_buffer:
+    path: "components/em_buffer"
+    git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+    version: "1.0.4"
+  em_button:
+    path: "components/em_button"
+    git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+    version: "1.0.4"
+  em_coredump:
+    path: "components/em_coredump"
+    git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+    version: "1.0.4"
+  em_dataset:
+    path: "components/em_dataset"
+    git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+    version: "1.0.4"
+  em_http_ota:
+    path: "components/em_http_ota"
+    git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+    version: "1.0.4"
+  em_led_scene:
+    path: "components/em_led_scene"
+    git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+    version: "1.0.4"
+  em_ringbuf:
+    path: "components/em_ringbuf"
+    git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+    version: "1.0.4"
+  em_sntp:
+    path: "components/em_sntp"
+    git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+    version: "1.0.4"
+  em_slip:
+    path: "components/em_slip"
+    git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+    version: "1.0.4"
+  em_scheduler:
+    path: "components/em_scheduler"
+    git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+    version: "1.0.4"
+  em_serial_client:
+    path: "components/em_serial_client"
+    git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+    version: "1.0.4"
+  em_tcp_client:
+    path: "components/em_tcp_client"
+    git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+    version: "1.0.4"
+  em_tcp_protocol:
+    path: "components/em_tcp_protocol"
+    git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+    version: "1.0.4"
+  em_uart:
+    path: "components/em_uart"
+    git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+    version: "1.0.4"
+  em_utils:
+    path: "components/em_utils"
+    git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+    version: "1.0.4"
+  em_wifi:
+    path: "components/em_wifi"
+    git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+    version: "1.0.4"

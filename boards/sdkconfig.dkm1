@@ -1,0 +1,12 @@
+# Copyright (C) 2024 EmbeddedSolutions.pl
+
+# Board-specific configuration for ESP32-C3 Devkit M1
+CONFIG_EM_HW_VER=2
+
+# WS2812 LED configuration
+CONFIG_EM_LED_WS2812=y
+CONFIG_EM_LED_WS2812_PIN=8
+CONFIG_EM_LED_BRIGHTNESS_DIVIDER=4
+
+# Button configuration
+CONFIG_EM_BUTTON_PIN=9

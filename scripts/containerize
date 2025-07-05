@@ -1,0 +1,33 @@
+# Copyright (C) 2024 EmbeddedSolutions.pl
+
+if [ -z "${container:-}" ]; then
+  repo_root=$(git -C "$scriptpath" rev-parse --show-toplevel)
+  topdir="$repo_root/../"
+  iidfile="$topdir/.es-core-iid-$container_name"
+
+  podman build \
+    -f "$repo_root/container/Containerfile.$container_name" \
+    --iidfile "$iidfile" \
+    "$repo_root/container"
+
+  iid=$(cat "$iidfile")
+
+  extra_args=()
+  if ! [ -z ${REPO_ROOT+x} ]; then
+    extra_args+=(-e "REPO_ROOT=$REPO_ROOT")
+  fi
+  if ! [ -z ${TIDY_APP+x} ]; then
+    extra_args+=(-e "TIDY_APP=$TIDY_APP")
+  fi
+
+  exec podman run \
+    --rm \
+    -it \
+    --net=none \
+    -v "$topdir:$topdir" \
+    -e "CONTAINERIZED=1" \
+    "${extra_args[@]}" \
+    -w "$PWD" \
+    "$iid" \
+    "$script" "$@"
+fi

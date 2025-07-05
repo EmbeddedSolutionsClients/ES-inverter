@@ -1,0 +1,38 @@
+# Copyright (C) 2024 EmbeddedSolutions.pl
+
+menu "EM Button component"
+
+    config EM_BUTTON_PIN
+        int "Button pin number"
+        default 9
+
+    config EM_BUTTON_ACTIVE_LEVEL
+        int "Button active level"
+        range 0 1
+        default 0
+        help
+            0 - Active Low
+            1 - Active High
+
+    config EM_BUTTON_MULTIPLE_CLICKS_NUM
+        int "Button multiple clicks"
+        range 3 4
+        default 3
+        help
+            Number of subsequent button clicks
+            which triggers BUTTON_MULTIPLE_CLICK event
+
+    config EM_BUTTON_VERY_LONG_PRESS_TIME_MS
+        int "Very long button press"
+        range 8000 10000
+        default 8000
+
+    config EM_BUTTON_BREAK_TIME_MAX_MS
+        int "Maximum time of break time"
+        default 2000
+        help
+            3xClick -- Break -- VeryLong press.
+            Maximum elapsed time between triple click
+            and very long button press.
+
+endmenu

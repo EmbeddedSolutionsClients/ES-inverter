@@ -1,0 +1,3 @@
+# Copyright (C) 2024 EmbeddedSolutions.pl
+
+rsource "storage/Kconfig.projbuild"

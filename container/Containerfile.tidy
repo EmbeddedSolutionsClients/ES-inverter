@@ -1,0 +1,11 @@
+# Copyright (C) 2024 EmbeddedSolutions.pl
+
+FROM docker.io/alpine:3.19
+
+RUN apk add --no-cache \
+  bash \
+  clang17-extra-tools \
+  fd \
+  grep \
+  git \
+  jq

@@ -1,0 +1,270 @@
+dependencies:
+  em_ble_core:
+    component_hash: 46346f39787b48cf6d9c454a751102bebd9b065c4f56fc1a3bbf470a525dfc9e
+    dependencies:
+    - name: idf
+      version: '>=5.4'
+    source:
+      git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+      path: components/experimental/em_ble_core
+      type: git
+    version: 01c194fb026ac8492c8e8aa48ad5a6e7ef1f5858
+  em_ble_prov_svc:
+    component_hash: 79d2bb00aa0a9c62482dd9ec3e95fb940cd1ca938786f9685761e6cdf48b4cef
+    dependencies:
+    - name: idf
+      version: '>=5.4'
+    source:
+      git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+      path: components/experimental/em_ble_prov_svc
+      type: git
+    version: 01c194fb026ac8492c8e8aa48ad5a6e7ef1f5858
+  em_buffer:
+    component_hash: 5903c8331795b0fb4f309d3a0b99e53faaeec16dae442331190b1501d5be9c84
+    dependencies:
+    - name: idf
+      version: '>=5.4'
+    source:
+      git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+      path: components/em_buffer
+      type: git
+    version: 01c194fb026ac8492c8e8aa48ad5a6e7ef1f5858
+  em_button:
+    component_hash: 1743569747b13ca17cee4dce5c85311afdf887a787cf8f7ba64d6eb58617cb8e
+    dependencies:
+    - name: idf
+      version: '>=5.4'
+    - name: espressif/button
+      version: =4.1.3
+    source:
+      git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+      path: components/em_button
+      type: git
+    version: 01c194fb026ac8492c8e8aa48ad5a6e7ef1f5858
+  em_coredump:
+    component_hash: de3d649afae6a29ca4a0b92223fd1be9feb486a26e81e19f90e19dfac5a41128
+    dependencies:
+    - name: idf
+      version: '>=5.4'
+    source:
+      git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+      path: components/em_coredump
+      type: git
+    version: 01c194fb026ac8492c8e8aa48ad5a6e7ef1f5858
+  em_dataset:
+    component_hash: ce02ae3ccf0ce06e68c19dc80c4aa15b344015b0382284e5d81b6d7189af4b4f
+    dependencies:
+    - name: idf
+      version: '>=5.4'
+    source:
+      git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+      path: components/em_dataset
+      type: git
+    version: 01c194fb026ac8492c8e8aa48ad5a6e7ef1f5858
+  em_http_ota:
+    component_hash: 8ce323b4b1c7d0fc5bc6c3ecb6d4113060981b1c76031725fb6c88544a78adba
+    dependencies:
+    - name: idf
+      version: '>=5.4'
+    - name: espressif/esp_encrypted_img
+      version: '>=2.3.0'
+    source:
+      git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+      path: components/em_http_ota
+      type: git
+    version: 01c194fb026ac8492c8e8aa48ad5a6e7ef1f5858
+  em_led_scene:
+    component_hash: 9f9bdf57a0e55ffac2df15c4f05b43f40030cc46b51d5430ce33e0729324003a
+    dependencies:
+    - name: idf
+      version: '>=5.4'
+    - name: espressif/led_strip
+      version: '>=3.0.1'
+    source:
+      git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+      path: components/em_led_scene
+      type: git
+    version: 01c194fb026ac8492c8e8aa48ad5a6e7ef1f5858
+  em_ringbuf:
+    component_hash: ce8a99f8332e245da10f43d55e6c75f012a14c233d1fd9a609f38704c47c4600
+    dependencies:
+    - name: idf
+      version: '>=5.4'
+    source:
+      git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+      path: components/em_ringbuf
+      type: git
+    version: 01c194fb026ac8492c8e8aa48ad5a6e7ef1f5858
+  em_scheduler:
+    component_hash: 48543e3a3cf5c9869893ec98e035c53471f278b47d1dc53cc30cdfb7dd8f0ea2
+    dependencies:
+    - name: idf
+      version: '>=5.4'
+    source:
+      git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+      path: components/em_scheduler
+      type: git
+    version: 01c194fb026ac8492c8e8aa48ad5a6e7ef1f5858
+  em_serial_client:
+    component_hash: 8fc6a0b5007a1f64e1b6dc4c9962d82697fb4da992fc46efa6a151f25d2c5998
+    dependencies:
+    - name: idf
+      version: '>=5.4'
+    source:
+      git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+      path: components/em_serial_client
+      type: git
+    version: 01c194fb026ac8492c8e8aa48ad5a6e7ef1f5858
+  em_slip:
+    component_hash: 0bc992f1d7c5c6e9fc690aa1ced24018dd59e46e638405ef4411e2ae82f3b0ab
+    dependencies:
+    - name: idf
+      version: '>=5.4'
+    source:
+      git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+      path: components/em_slip
+      type: git
+    version: 01c194fb026ac8492c8e8aa48ad5a6e7ef1f5858
+  em_sntp:
+    component_hash: d9b010da8566e3c26a1b1abfa3b0c1eee752063e4f4f98242881d8e736e7a60b
+    dependencies:
+    - name: idf
+      version: '>=5.4'
+    source:
+      git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+      path: components/em_sntp
+      type: git
+    version: 01c194fb026ac8492c8e8aa48ad5a6e7ef1f5858
+  em_tcp_client:
+    component_hash: fb57bd0b32f842b783d940e7260b53705e0e125985d10f4cb48a7af358124c2c
+    dependencies:
+    - name: idf
+      version: '>=5.4'
+    source:
+      git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+      path: components/em_tcp_client
+      type: git
+    version: 01c194fb026ac8492c8e8aa48ad5a6e7ef1f5858
+  em_tcp_protocol:
+    component_hash: 1b437b38d328b2c6a5887c84cfa42a8c3228268fd279025f6162531fe7f06007
+    dependencies:
+    - name: idf
+      version: '>=5.4'
+    source:
+      git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+      path: components/em_tcp_protocol
+      type: git
+    version: 01c194fb026ac8492c8e8aa48ad5a6e7ef1f5858
+  em_uart:
+    component_hash: 84d0391722c536d17a804835455751c1028ec6e48d88a1de6e764d1930a01d4c
+    dependencies:
+    - name: idf
+      version: '>=5.4'
+    source:
+      git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+      path: components/em_uart
+      type: git
+    version: 01c194fb026ac8492c8e8aa48ad5a6e7ef1f5858
+  em_utils:
+    component_hash: 379dc9801f01dc5a9863aeb037dca0025aae5bb8c76e48c999c1cdcf0a4e730d
+    dependencies:
+    - name: idf
+      version: '>=5.4'
+    source:
+      git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+      path: components/em_utils
+      type: git
+    version: 01c194fb026ac8492c8e8aa48ad5a6e7ef1f5858
+  em_wifi:
+    component_hash: eb391b2088390574d13f36197e076fefde1b2484f678cfac8ca612f977f9188f
+    dependencies:
+    - name: idf
+      version: '>=5.4'
+    - name: espressif/mdns
+      version: '>=1.8.2'
+    source:
+      git: git@github.com:EmbeddedSolutionsClients/ES-esp-core.git
+      path: components/em_wifi
+      type: git
+    version: 01c194fb026ac8492c8e8aa48ad5a6e7ef1f5858
+  espressif/button:
+    component_hash: f53face2ab21fa0ffaf4cf0f6e513d393f56df6586bb2ad1146120f03f19ee05
+    dependencies:
+    - name: espressif/cmake_utilities
+      registry_url: https://components.espressif.com
+      require: private
+      version: '*'
+    - name: idf
+      require: private
+      version: '>=4.0'
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 4.1.3
+  espressif/cmake_utilities:
+    component_hash: 05165f30922b422b4b90c08845e6d449329b97370fbd06309803d8cb539d79e3
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=4.1'
+    source:
+      registry_url: https://components.espressif.com
+      type: service
+    version: 1.1.1
+  espressif/esp_encrypted_img:
+    component_hash: b499c1117498647092bb7c45bef88983085aaba1824943421f0f36e80f38966d
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=4.4'
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 2.5.0
+  espressif/led_strip:
+    component_hash: 223998f10cae6d81f2ad2dd3c1103c2221be298c708e37917482b0153f3ec64e
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=5.0'
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 3.0.1~1
+  espressif/mdns:
+    component_hash: 3ec0af5f6bce310512e90f482388d21cc7c0e99668172d2f895356165fc6f7c5
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=5.0'
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 1.8.2
+  idf:
+    source:
+      type: idf
+    version: 5.4.0
+direct_dependencies:
+- em_ble_core
+- em_ble_prov_svc
+- em_buffer
+- em_button
+- em_coredump
+- em_dataset
+- em_http_ota
+- em_led_scene
+- em_ringbuf
+- em_scheduler
+- em_serial_client
+- em_slip
+- em_sntp
+- em_tcp_client
+- em_tcp_protocol
+- em_uart
+- em_utils
+- em_wifi
+- idf
+manifest_hash: 3742ba9a760f83314b7d260ac8ab787942fdb911ff0090e96e518e935e7e1df0
+target: esp32c3
+version: 2.0.0

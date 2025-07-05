@@ -1,0 +1,70 @@
+# Copyright (C) 2024 EmbeddedSolutions.pl
+
+# ToDo: Drivers may use the same periphs, solve that here
+
+menu "EM LED component"
+  config EM_LED_THREAD_STACK_SIZE
+    int "LED Thread stack size"
+    default 2048
+
+  config EM_LED_THREAD_PRIO
+    int "LED Thread priority"
+    default 25
+
+  config EM_LED_PWM
+    bool "Single classic LED"
+    default y
+
+  config EM_LED_PWM_LED_PIN
+    depends on EM_LED_PWM
+    int "Single LED pin"
+    default 2
+
+  config EM_LED_PWM_LED_INVERT
+    depends on EM_LED_PWM
+    bool "PWM LED output inverted"
+    default n
+
+  config EM_LED_WS2812
+    bool "RGB LED WS2812 strip"
+    default y
+
+  config EM_LED_WS2812_PIN
+    int "LED pin number"
+    depends on EM_LED_WS2812
+    default 8
+
+  config EM_LED_PWM_RGB
+    bool "PWM LED RGB"
+    default n
+
+  if EM_LED_PWM_RGB
+    config EM_LED_PWM_CHANNELS
+      int "Number of PWM LED channels"
+      default 3
+
+    config EM_LED_R_PIN
+      int "LED Red pin number"
+      default 7
+
+    config EM_LED_G_PIN
+      int "LED Green pin number"
+      default 5
+
+    config EM_LED_B_PIN
+      int "LED Blue pin number"
+      default 4
+  endif # EM_LED_PWM_RGB
+
+  config EM_LED_PWM_RGB_INVERT
+    depends on EM_LED_PWM_RGB
+    bool "PWM RGB LED output inverted"
+    default n
+
+  config EM_LED_BRIGHTNESS_DIVIDER
+    int "Default brightness of a LED"
+    depends on EM_LED_PWM || EM_LED_PWM_RGB || EM_LED_WS2812
+    range 1 10
+    default 1
+
+endmenu

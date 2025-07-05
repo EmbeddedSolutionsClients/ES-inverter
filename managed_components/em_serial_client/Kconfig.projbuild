@@ -1,0 +1,20 @@
+# Copyright (C) 2024 EmbeddedSolutions.pl
+
+menu "EM Serial Client component"
+    config EM_SERIAL_CLIENT_TASK_PRIO
+      int "Serial client task priority"
+      default 7
+
+    config EM_SERIAL_CLIENT_TASK_STACK_SIZE
+      int "Serial client task stack size"
+      default 5120
+
+    config EM_SERIAL_CLIENT_MAX_PACKET_LEN
+      int "Serial client maximum packet length"
+      default 160
+
+    config EM_SERIAL_CLIENT_MAX_RQS
+      int "Serial client maximum requests"
+      default 8
+
+endmenu

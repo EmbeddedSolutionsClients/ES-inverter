@@ -1,0 +1,52 @@
+# Copyright (C) 2024 EmbeddedSolutions.pl
+
+menu "EM HTTP OTA component"
+    config EM_HTTP_OTA_TASK_PRIO
+      int "HTTP OTA Task priority"
+      default 5
+
+    config EM_HTTP_OTA_TASK_STACK_SIZE
+      int "HTTP OTA Task stack size"
+      default 8192
+
+    config EM_HTTP_OTA_MAX_QUEUE_MSGS
+      int "HTTP OTA maximum submitted messages"
+      default 3
+      help
+        Like START-ABORT-START
+
+    config EM_HTTP_OTA_SERVER_HOSTNAME
+      string "OTA Server hostname"
+      default "api.embeddedsolutions.pl"
+
+    config EM_HTTP_OTA_SERVER_PORT
+      int "OTA Server port"
+      default 35368
+
+    config EM_HTTP_OTA_SERVER_TIMEOUT_MS
+      int "OTA Server timeout"
+      default 60000
+      help
+        How long application is suppose to wait for server response
+        before it aborts OTA process.
+
+    config EM_HTTP_OTA_REQ_SIZE
+      int "Maximum request size for partial HTTP download"
+      range 396 16384
+      default 16384
+      help
+        Low range 396 -> sizeof(esp_image_header_t) + sizeof(esp_image_segment_header_t) + sizeof(esp_app_desc_t).
+          Ensure that new application's descriptor is available on first server respond.
+        High range 16384 -> Can be greater but requires testing.
+
+    config EM_HTTP_OTA_QUEUE_SUBMIT_TIMEOUT_MS
+      int "OTA queue submit timeout"
+      default 10
+
+    config EM_HTTP_OTA_PROGRESS_ACCURACY
+      int "OTA progress accuracy"
+      default 20
+      help
+        Value should be divisible by 100 without a remainder.
+
+endmenu

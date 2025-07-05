@@ -1,0 +1,28 @@
+# Copyright (C) 2024 EmbeddedSolutions.pl
+
+rsource "modules/Kconfig"
+
+menu "Main component"
+  config APP_DEBUG
+    bool "Enable debug options"
+    imply FREERTOS_USE_TRACE_FACILITY
+    imply FREERTOS_USE_STATS_FORMATTING_FUNCTIONS
+    default n
+
+  config APP_DEBUG_STATS_INTERVAL_MS
+    int "RTOS Stats printout interval"
+    depends on APP_DEBUG
+    default 3600000
+
+  config APP_IMAGE_CONFIRM_TIMEOUT_MS
+    int "Application image confirm timeout"
+    default 60000
+    help
+      New application has APP_IMAGE_CONFIRM_TIMEOUT_MS for passing the
+      validity check and be confirmed to omit the rollback.
+
+   config EM_DEVICE_NAME
+    string "Name of the device for BLE and WiFi"
+    default "ES-DEV"
+
+endmenu

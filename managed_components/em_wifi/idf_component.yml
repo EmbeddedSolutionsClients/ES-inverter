@@ -1,0 +1,8 @@
+# Copyright (C) 2025 EmbeddedSolutions.pl
+
+version: "1.0.4"
+description: WiFi ES core component
+repository: https://github.com/EmbeddedSolutionsClients/ES-esp-core.git
+dependencies:
+  idf: ">=5.4"
+  espressif/mdns: ">=1.8.2"

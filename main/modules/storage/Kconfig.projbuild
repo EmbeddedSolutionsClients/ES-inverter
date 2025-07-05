@@ -1,0 +1,10 @@
+# Copyright (C) 2024 EmbeddedSolutions.pl
+
+menu "EM Storage component"
+
+  config EM_STORAGE_DUMP_DEBOUNCE_MS
+    int "Debounce time of storage block dump"
+    range 300 10000
+    default 500
+
+endmenu

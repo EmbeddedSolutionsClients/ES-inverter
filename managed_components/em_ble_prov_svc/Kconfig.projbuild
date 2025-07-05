@@ -1,0 +1,9 @@
+# Copyright (C) 2025 EmbeddedSolutions.pl
+
+menu "ES BLE Prov service"
+
+	config ES_DISCONNECTION_DEINIT_DELAY
+		int "How many milliseconds after disconnection BLE is off"
+		default 60000
+
+endmenu

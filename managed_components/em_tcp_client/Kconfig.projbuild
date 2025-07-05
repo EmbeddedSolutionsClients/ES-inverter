@@ -1,0 +1,73 @@
+# Copyright (C) 2024 EmbeddedSolutions.pl
+
+menu "EM TCP Client component"
+  config EM_TCP_RX_TASK_STACK_SIZE
+      int "TCP RX stack size"
+      default 16384
+
+  config EM_TCP_RX_TASK_PRIO
+      int "TCP RX stack priority"
+      default 6
+
+  config EM_TCP_RX_BUFFER_SIZE
+      int "TCP RX buffer size"
+      default 256
+
+  config EM_TCP_RX_TASK_SLEEPTIME_MS
+    int "TCP RX task sleeptime"
+    range 10  500
+    default 500
+    help
+      RX sleeptime if there is no data available on socket.
+      Redo data availability check after sleeptime.
+
+  config EM_TCP_TX_TASK_STACK_SIZE
+      int "TCP TX stack size"
+      default 6144
+
+  config EM_TCP_TX_TASK_PRIO
+      int "TCP TX stack priority"
+      default 6
+
+  config EM_TCP_CMD_MSG_Q_MAX
+    int "Maximum number of command type messages in queue"
+    default 8
+
+  config EM_TCP_TX_SEND_MSG_Q_MAX
+    int "Maximum number of send type messages in queue"
+    default 8
+
+  config EM_TCP_RX_STATE_MSG_Q_MAX
+    int "Maximum number of state type messages in rx task queue"
+    default 3
+
+  config EM_TCP_MSG_SUBMIT_TIMEOUT_MS
+    int "Timeout on submitting message to queue"
+    default 10
+
+  config EM_TCP_PORT
+    int "TCP Port"
+    default 35376
+
+  config EM_TCP_HOSTNAME
+    string "Hostname"
+    default "api.embeddedsolutions.pl"
+
+  config EM_TCP_RECONNECT_TIMEOUT_MS
+    int "Time to wait before another reconnection attempt"
+    default 5000
+
+  config EM_TCP_CONN_RANDOM_DELAY_MS
+    int "TCP connect/reconnect additionall random delay"
+    range 0 5000
+    default 2000
+    help
+      TCP connect/reconnect has 1000msec base delay.
+      EM_TCP_CONN_RANDOM_RANGE_MS is added to the base delay;
+
+  config EM_TCP_REBOOT_ON_MSG_DELAY_MS
+    int "Delay before reboot on receiving reboot related message"
+    range 100 1000
+    default 1000
+
+endmenu

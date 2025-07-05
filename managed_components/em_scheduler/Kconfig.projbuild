@@ -1,0 +1,9 @@
+# Copyright (C) 2024 EmbeddedSolutions.pl
+
+menu "EM Scheduler component"
+
+  config EM_SCHEDULER_MAX_ENTRIES
+    int "Maximum number of scheduled callbacks"
+    default 5
+
+endmenu

@@ -1,0 +1,14 @@
+# Copyright (C) 2024 EmbeddedSolutions.pl
+
+menu "EM SLIP component"
+
+  config EM_SLIP_ENCODED_DATA_BUF_SIZE
+    int "Size of SLIP encoded data buffer"
+    default 1536
+
+  config EM_SLIP_DECODED_DATA_BUF_SIZE
+    int "Size of SLIP decoded data buffer"
+    range EM_SLIP_ENCODED_DATA_BUF_SIZE 8192
+    default 2048
+
+endmenu

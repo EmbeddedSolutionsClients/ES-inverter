@@ -1,0 +1,4 @@
+# Copyright (C) 2025 EmbeddedSolutions.pl
+
+CONFIG_EM_TCP_PORT=35376
+CONFIG_EM_TCP_HOSTNAME="api.embeddedsolutions.pl"

@@ -1,0 +1,19 @@
+#!/bin/bash
+# Copyright (C) 2024 EmbeddedSolutions.pl
+
+set -euo pipefail
+
+script=$(readlink -f "$0")
+scriptpath=$(dirname "$script")
+container_name="lint"
+repo_root_core=$(git -C "$scriptpath" rev-parse --show-toplevel)
+repo_root="${REPO_ROOT:-$repo_root_core}"
+
+cd "$repo_root"
+
+# shellcheck source-path=SCRIPTDIR
+source "$scriptpath/containerize"
+
+fd --type f . -x "$repo_root_core/scripts/trailing_newline"
+
+echo "All trailing newlines are fine ✅"

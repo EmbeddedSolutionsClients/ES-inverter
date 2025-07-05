@@ -1,0 +1,8 @@
+# Copyright (C) 2025 EmbeddedSolutions.pl
+
+version: "1.0.4"
+description: LED scene component
+repository: https://github.com/EmbeddedSolutionsClients/ES-esp-core.git
+dependencies:
+  idf: ">=5.4"
+  espressif/led_strip: ">=3.0.1"

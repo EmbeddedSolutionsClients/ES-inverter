@@ -1,0 +1,41 @@
+#!/bin/bash
+# Copyright (C) 2024 EmbeddedSolutions.pl
+
+set -euo pipefail
+
+script=$(readlink -f "$0")
+scriptpath=$(dirname "$script")
+container_name="lint"
+repo_root_core=$(git -C "$scriptpath" rev-parse --show-toplevel)
+repo_root="${REPO_ROOT:-$repo_root_core}"
+
+cd "$repo_root"
+
+# shellcheck source-path=SCRIPTDIR
+source "$scriptpath/containerize"
+
+rg_ignore_nomatch() {
+    ret="0"
+    rg "$@" || ret="$?"
+    if [ "$ret" != "0" ] && [ "$ret" != "1" ]; then
+        exit "$ret"
+    fi
+}
+
+fd -e h -e c -x clang-format --dry-run -Werror -i
+fd -e py -x black --check
+rg_ignore_nomatch -l0 '^#!.*python' | xargs -r0 black --check
+rg_ignore_nomatch -l0 '^#!/bin/(bash|sh)$' | xargs -r0 shellcheck -x
+doc8 \
+    --ignore-path '**/**/**/**/**/**/**/**/*.txt' \
+		--ignore-path '**/**/**/**/**/**/**/*.txt' \
+    --ignore-path '**/**/**/**/**/**/*.txt' \
+    --ignore-path '**/**/**/**/**/*.txt' \
+		--ignore-path '**/**/**/**/*.txt' \
+    --ignore-path '**/**/**/*.txt' \
+    --ignore-path '**/**/*.txt' \
+    --ignore-path '**/*.txt' \
+    --ignore-path '*.txt'
+typos
+
+echo "All lints passed ✅"

@@ -1,0 +1,36 @@
+# Copyright (C) 2024 EmbeddedSolutions.pl
+
+menu "EM SNTP component"
+
+  config EM_SNTP_SERVER_PRIMARY
+    string "SNTP server primary"
+    default "tempus1.gum.gov.pl"
+    help
+      The Central Office of Measures provides the Internet service that allows
+      time synchronization in computer systems with the official time in Poland.
+      https://www.gum.gov.pl/en/services/time-service/187,Time-Service.html
+      Instance: 1
+
+  config EM_SNTP_SERVER_BACKUP
+    string "SNTP server backup"
+    default "tempus2.gum.gov.pl"
+    help
+      The Central Office of Measures provides the Internet service that allows
+      time synchronization in computer systems with the official time in Poland.
+      https://www.gum.gov.pl/en/services/time-service/187,Time-Service.html
+      Instance: 2
+
+  config EM_SNTP_LOCAL_TIMEZONE
+    string "SNTP device local timezone"
+    default "CET-1CEST,M3.5.0,M10.5.0/3"
+    help
+      Value here is used by setenv() and tzset() time API for setting device
+      timezone.
+
+  config EM_SNTP_TIMEZONE_CET
+    int "SNTP Device CET"
+    default 1
+    help
+      GMT+1 (CET)
+
+endmenu

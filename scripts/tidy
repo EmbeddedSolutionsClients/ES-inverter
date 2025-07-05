@@ -1,0 +1,84 @@
+#!/bin/bash
+# Copyright (C) 2024 EmbeddedSolutions.pl
+
+set -euo pipefail
+
+script=$(readlink -f "$0")
+scriptpath=$(dirname "$script")
+container_name="tidy"
+repo_root_core=$(git -C "$scriptpath" rev-parse --show-toplevel)
+repo_root="${REPO_ROOT:-$repo_root_core}"
+build_dir="$repo_root/../build-esp"
+
+if [ -z "${CONTAINERIZED:-}" ]; then
+  idf.py -B "$build_dir" build
+
+  sed -i 's/-fno-reorder-functions//g' "$build_dir"/compile_commands.json
+  sed -i 's/-fno-shrink-wrap//g' "$build_dir"/compile_commands.json
+  sed -i 's/-fno-tree-switch-conversion//g' "$build_dir"/compile_commands.json
+  sed -i 's/-fstrict-volatile-bitfields//g' "$build_dir"/compile_commands.json
+  sed -i 's/-mfp16-format=ieee//g' "$build_dir"/compile_commands.json
+  sed -i 's/-fno-defer-pop//g' "$build_dir"/compile_commands.json
+  sed -i 's/--param=min-pagesize=0//g' "$build_dir"/compile_commands.json
+  sed -i 's/-fno-printf-return-value//g' "$build_dir"/compile_commands.json
+  sed -i 's/--specs=picolibc.specs//g' "$build_dir"/compile_commands.json
+fi
+
+# shellcheck source-path=SCRIPTDIR
+source "$scriptpath/containerize"
+
+mapfile -t compiled_files_all < <(jq --raw-output .[].file "$build_dir/compile_commands.json")
+
+compiled_files=()
+
+for file in "${compiled_files_all[@]}"; do
+
+	if [[ "$file" == "$repo_root/PoC/"* ]]; then
+		continue
+	fi
+
+  if [[ "$file" != "$repo_root/"* ]]; then
+      continue
+  fi
+
+  if [[ "$file" == "$build_dir"* ]]; then
+        continue
+    fi
+
+  if [[ "$file" == "$repo_root/managed_components/"* ]]; then
+        continue
+    fi
+
+  echo "App file: $file"
+    compiled_files+=("$file")
+done
+
+mapfile -d '' all_files < <(fd --print0 -e c . "$repo_root")
+
+has_missing=false
+for file in "${all_files[@]}"; do
+  if [[ "$file" == "$repo_root/"* ]]; then
+    continue
+  fi
+
+  # shellcheck disable=SC2076
+  if [[ "${compiled_files[*]}" =~ "$file" ]]; then
+    continue
+  fi
+
+  echo "ERROR: Unchecked file: $file"
+  has_missing=true
+done
+
+if $has_missing; then
+  exit 1
+fi
+
+echo "All passed besides cling-tidy - TODO: uncomment fix it⚠️"
+## shellcheck disable=SC2046
+#clang-tidy \
+#  -header-filter="$repo_root'/(?!managed_components/).*'" \
+#  -extra-arg=-Wno-unknown-warning-option \
+#  -p "$build_dir" \
+#  "$@" \
+#  $(jq -r .[].file "$build_dir/compile_commands.json" | grep "^$repo_root" | grep -v "^$repo_root/managed_components")

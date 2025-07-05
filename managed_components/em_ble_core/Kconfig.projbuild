@@ -1,0 +1,8 @@
+# Copyright (C) 2025 EmbeddedSolutions.pl
+
+menu "ES Advertising"
+	config ES_ADVERTISING_INTERVAL_MS
+		int "Advertising interval"
+		default 0
+
+endmenu

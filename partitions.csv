@@ -1,0 +1,13 @@
+# Copyright (C) 2025 EmbeddedSolutions.pl
+
+# Name,   Type, SubType, Offset,   Size, Flags
+# Note: Partition offset is configure with CONFIG_PARTITION_TABLE_OFFSET symbol
+nvs,      data, nvs,     ,        0x6000,
+otadata,  data, ota,     ,        0x2000,
+phy_init, data, phy,     ,        0x1000,
+nvs_key,  data, nvs_keys, ,       0x1000,
+# OTA never updates the factory partition.
+# If you want to conserve flash usage in an OTA project, you can remove the factory partition and use ota_0 instead.
+ota_0,    app,  ota_0,   ,        0x1A0000,
+ota_1,    app,  ota_1,   ,        0x1A0000,
+coredump, data, coredump,,        0x10000,

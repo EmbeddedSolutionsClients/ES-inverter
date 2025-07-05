@@ -1,0 +1,47 @@
+# Copyright (C) 2024 EmbeddedSolutions.pl
+
+menu "EM WiFi component"
+  # uncomment when APSTA is implemented
+	#config EM_WIFI_AP_INITIALIZE_NET_IF
+	#		bool "Initialize network interfaces"
+	#		default y
+	#		help
+	#				If enabled, depending on the provisioning status wifi core calls:
+	#				esp_netif_create_default_wifi_sta()
+	#				OR
+	#				esp_netif_create_default_wifi_ap()
+	#				esp_netif_create_default_wifi_sta()
+
+	config EM_WIFI_MAX_SCAN_RECORDS
+		int "Maximum number of WiFi AP records"
+		default 8
+		help
+				Limits the number of listed WiFi networks on server
+				provisioning page.
+
+  choice
+    prompt "Wi-Fi storage location"
+    default EM_WIFI_STORAGE_FLASH
+
+  config EM_WIFI_STORAGE_FLASH
+      bool "Store Wi-Fi data in FLASH"
+      help
+        Select this option to store Wi-Fi data in flash memory.
+
+  config EM_WIFI_STORAGE_RAM
+      bool "Store Wi-Fi data in RAM"
+      help
+        Select this option to store Wi-Fi data in RAM.
+
+  endchoice
+
+  config EM_WIFI_CREDENTIALS_STORAGE
+      int
+      default 0 if EM_WIFI_STORAGE_FLASH
+      default 1 if EM_WIFI_STORAGE_RAM
+      help
+        Internal value for EM_WIFI_CREDENTIALS_STORAGE:
+          0 = FLASH
+          1 = RAM
+
+endmenu

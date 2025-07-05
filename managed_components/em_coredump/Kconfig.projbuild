@@ -1,0 +1,7 @@
+# Copyright (C) 2024 EmbeddedSolutions.pl
+
+menu "EM Coredump component"
+  config EM_COREDUMP_BLOCK_MAX_SIZE
+    int "Maximum size of single Coredump data block"
+    default 1024
+endmenu

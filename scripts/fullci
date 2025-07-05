@@ -1,0 +1,14 @@
+#!/bin/bash
+# Copyright (C) 2024 EmbeddedSolutions.pl
+
+set -euo pipefail
+
+script=$(readlink -f "$0")
+scriptpath=$(dirname "$script")
+
+"$scriptpath/trailing_newline_all"
+"$scriptpath/copyright_all"
+"$scriptpath/lint"
+"$scriptpath/tidy"
+
+echo "full-ci passed ✅"

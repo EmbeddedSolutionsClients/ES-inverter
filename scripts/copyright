@@ -1,0 +1,61 @@
+#!/usr/bin/env python3
+# Copyright (C) 2024 EmbeddedSolutions.pl
+
+import sys
+import re
+import os
+import logging
+import traceback
+from pathlib import Path
+
+logger = logging.getLogger(__name__)
+
+RE_COPYRIGHT = re.compile("^(#\s|\*\s)Copyright \(C\) 20\d{2} EmbeddedSolutions\.pl$")
+
+
+def check_header(file):
+    for _ in range(2):
+        line = file.readline().strip()
+        if not line:
+            return False
+
+        if RE_COPYRIGHT.fullmatch(line):
+            return True
+
+    return False
+
+
+def check(path):
+    path = Path(path)
+
+    with path.open() as file:
+        if path.suffix == ".pem":
+            return
+        if path.suffix == ".mod":
+            return
+        if path.name == "README.md":
+            return
+        if "schematic" in str(path).lower():
+            return
+        if "managed_components" in str(path).lower():
+            return
+        if path.name == "dependencies.lock":
+            return
+        if path.suffix == ".jpg" or path.suffix == ".png":
+            return
+
+        found = check_header(file)
+        if not found:
+            raise Exception(f"Missing copyright header or wrong format")
+
+
+if __name__ == "__main__":
+    logging.basicConfig(level=os.getenv("LOG_LEVEL", "INFO").upper())
+
+    try:
+        path = sys.argv[1]
+        check(path)
+    except Exception as e:
+        logger.error(f"{path}: {e}")
+        logger.debug(traceback.format_exc())
+        sys.exit(1)

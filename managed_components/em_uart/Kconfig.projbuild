@@ -1,0 +1,42 @@
+# Copyright (C) 2025 EmbeddedSolutions.pl
+
+menu "EM UART component"
+
+    config EM_UART_PORT_NUM
+        int "UART port number"
+        default 0
+        help
+            UART communication port number for the example.
+            See UART documentation for available port numbers.
+
+    config EM_UART_RXD
+        int "UART RXD pin number"
+        default 20
+        help
+            GPIO number for UART RX pin. See UART documentation for more information
+            about available pin numbers for UART.
+
+    config EM_UART_TXD
+        int "UART TXD pin number"
+        default 21
+        help
+            GPIO number for UART TX pin. See UART documentation for more information
+            about available pin numbers for UART.
+
+    config EM_UART_TASK_STACK_SIZE
+        int "UART task stack size"
+        default 2048
+
+    config EM_UART_TASK_PRIO
+        int "UART task priority"
+        default 8
+
+    config EM_UART_RING_BUF_SIZE
+        int "UART ring buf size"
+        default 256
+
+    config EM_UART_READ_BUF_SIZE
+        int "UART read buf size"
+        default 128
+
+endmenu

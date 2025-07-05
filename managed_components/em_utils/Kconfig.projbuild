@@ -1,0 +1,13 @@
+# Copyright (C) 2024 EmbeddedSolutions.pl
+
+menu "EM utils component"
+
+  config EM_DEV_TYPE
+      int "Device type, see enum dev_type_t"
+      default 0
+
+  config EM_HW_VER
+    int "HW ver, see enum hw_ver_t"
+    default 0
+
+endmenu
