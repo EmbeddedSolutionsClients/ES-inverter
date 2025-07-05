@@ -85,14 +85,8 @@ jobs:
               rm -rf sdkconfig
               idf.py fullclean
 
-              build_type=release
-
-              if [[ "$hw_ver" == "ep_v3" ]]; then
-                  idf.py --ccache build -D HW=${hw_ver} -DRELEASE=ON
-              else
-                  build_type=debug
-                  idf.py --ccache build -D HW=${hw_ver}
-              fi
+              build_type=debug
+              idf.py --ccache build -D HW=${hw_ver}
 
               esptool.py --chip ESP32-C3 merge_bin -o build/merged_es-inverter.bin \
                 --flash_mode dio --flash_size 4MB \
