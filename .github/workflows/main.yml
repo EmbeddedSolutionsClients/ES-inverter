@@ -1,0 +1,148 @@
+name: Build
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "**"
+  pull_request:
+    branches:
+      - main
+permissions:
+  actions: write
+  contents: write
+
+jobs:
+  cancel:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.11.0
+        with:
+          access_token: ${{ github.token }}
+
+  build:
+    needs:
+      - cancel
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    outputs:
+      fw_ver: ${{ steps.release-folder.outputs.FW_VER }}
+      hw_list: ${{ steps.release-folder.outputs.HW_LIST }}
+    steps:
+      - name: ♻️ Initialize workspace
+        uses: actions/checkout@v4
+        with:
+          submodules: "recursive"
+
+      - name: 📁 Create release folder
+        id: release-folder
+        run: |
+          fw_ver=$(sed -n 's/^CONFIG_APP_PROJECT_VER="\([^"]*\)"/\1/p' sdkconfig.defaults)
+          echo "FW_VER=$fw_ver" >> "$GITHUB_OUTPUT"
+          mkdir -p inverter_${fw_ver}
+          hw_list=$(find boards -maxdepth 1 -type f -name 'sdkconfig.*' | sed -E 's|.*/sdkconfig\.||' | paste -sd ',')
+          echo "HW_LIST=$hw_list" >> "$GITHUB_OUTPUT"
+          echo "Comma-separated hardware list: $hw_list"
+          IFS=',' read -r -a hw_ver_array <<< "$hw_list"
+          echo "Hardware versions array: ${hw_ver_array[@]}"
+          for hw_ver in "${hw_ver_array[@]}"; do
+            mkdir -p inverter_${fw_ver}/${hw_ver}
+          done
+
+      - name: 🛠️ Build targets
+        uses: espressif/esp-idf-ci-action@v1
+        with:
+          esp_idf_version: v5.4
+          target: esp32c3
+          path: "."
+          command: |
+            mkdir -p ~/.ssh
+            ssh-keyscan -t rsa,ecdsa,ed25519 github.com >> ~/.ssh/known_hosts
+            echo "${{ secrets.SSH_CORE_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+            echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa_extra
+            chmod 600 ~/.ssh/id_rsa ~/.ssh/id_rsa_extra
+            ssh -T git@github.com || true
+
+            last_tag=$(git describe --tags --abbrev=0 HEAD^ || echo "")
+            current_tag=$(git describe --tags --abbrev=0 || echo "")
+            echo "Generating changelog between '$last_tag' and '$current_tag'"
+
+            if [[ -n "$last_tag" && "$last_tag" != "$current_tag" ]]; then
+              git log "$last_tag"..HEAD --pretty=format:"- %s (%an)" > CHANGELOG.md
+            else
+              git log -n 10 --pretty=format:"- %s (%an)" > CHANGELOG.md
+            fi
+
+            fw_ver=${{ steps.release-folder.outputs.FW_VER }}
+            hw_list=${{ steps.release-folder.outputs.HW_LIST }}
+            echo "Hardware list: $hw_list"
+
+            IFS=',' read -r -a hw_ver_array <<< "$hw_list"
+            for hw_ver in "${hw_ver_array[@]}"; do
+              echo "Building for HW Version: $hw_ver"
+              rm -rf sdkconfig
+              idf.py fullclean
+
+              build_type=release
+
+              if [[ "$hw_ver" == "ep_v3" ]]; then
+                  idf.py --ccache build -D HW=${hw_ver} -DRELEASE=ON
+              else
+                  build_type=debug
+                  idf.py --ccache build -D HW=${hw_ver}
+              fi
+
+              esptool.py --chip ESP32-C3 merge_bin -o build/merged_es-inverter.bin \
+                --flash_mode dio --flash_size 4MB \
+                0x0 build/bootloader/bootloader.bin \
+                0xC000 build/partition_table/partition-table.bin \
+                0x13000 build/ota_data_initial.bin \
+                0x20000 build/es-inverter.bin
+              cp build/es-inverter_secure.bin inverter_${fw_ver}/${hw_ver}/ota_es-inv_${fw_ver}_${build_type}.bin
+              cp build/merged_es-inverter.bin inverter_${fw_ver}/${hw_ver}/merged_es-inv_${fw_ver}_${build_type}.bin
+              ls -la inverter_${fw_ver}/${hw_ver}/
+            done
+
+            cp CHANGELOG.md inverter_${fw_ver}/CHANGELOG.md
+
+      - name: 🚀 Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release_inverter_${{ steps.release-folder.outputs.FW_VER }}
+          path: |
+            inverter_${{ steps.release-folder.outputs.FW_VER }}
+
+  deploy:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs:
+      - build
+    runs-on: ubuntu-22.04
+    timeout-minutes: 2
+    steps:
+      - name: ⬇️ Download all built artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: release_inverter_${{ needs.build.outputs.fw_ver }}
+          path: inverter_${{ needs.build.outputs.fw_ver }}
+
+      - name: 🚀 Upload binaries to ES server
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N "" -q
+          ssh-keyscan -p 222 -H api.embeddedsolutions.pl >> ~/.ssh/known_hosts
+          sshpass -p ${{ secrets.ES_SERVER_PASSWORD }} scp -r -P 222 \
+            inverter_${{ needs.build.outputs.fw_ver }}/* \
+            fufadi@api.embeddedsolutions.pl:/home/fufadi/fw_update/images/
+
+      - name: 📦 Create Release package
+        run: zip -r inverter_${{ needs.build.outputs.fw_ver }}.zip inverter_${{ needs.build.outputs.fw_ver }}
+
+      - name: 🔒 Publish GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: inverter_${{ needs.build.outputs.fw_ver }}.zip
+          token: ${{ secrets.GITHUB_TOKEN }}
+          generate_release_notes: true
