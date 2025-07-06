@@ -125,22 +125,6 @@ static esp_err_t update_apply_handler(void *data)
   return ESP_OK;
 }
 
-static int sort_modes_ascending(const void *a, const void *b)
-{
-  uint8_t mode_a = *((uint8_t *)a);
-  uint8_t mode_b = *((uint8_t *)b);
-
-  if (mode_a < mode_b) {
-    return -1;
-  }
-
-  if (mode_a > mode_b) {
-    return 1;
-  }
-
-  return 0;
-}
-
 static int environment_cloud_cover_handler(void *data)
 {
   ESP_UNUSED(data);

@@ -1,0 +1,5 @@
+# Copyright (C) 2024 EmbeddedSolutions.pl
+
+menu "EM Inverter component"
+
+endmenu
